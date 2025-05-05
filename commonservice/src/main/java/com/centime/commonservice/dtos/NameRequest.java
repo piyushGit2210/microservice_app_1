@@ -3,8 +3,6 @@ package com.centime.commonservice.dtos;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 
-
-@Validated
 public class NameRequest {
     @NotBlank
     private String name;
@@ -31,5 +29,13 @@ public class NameRequest {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public String toString() {
+        return "NameRequest{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
     }
 }

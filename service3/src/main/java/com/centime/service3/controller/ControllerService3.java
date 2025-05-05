@@ -17,7 +17,7 @@ public class ControllerService3 {
 
     @PostMapping("/print")
     public ResponseEntity<String> printName(@RequestBody @Valid NameRequest request) {
-        logger.info("TraceID: {}, POST /print called with {}", MDC.get("traceId"), request);
+        logger.info("TraceID: {}, POST /print called with {}", MDC.get("traceId"), request.toString());
         return ResponseEntity.ok(request.getName()+ " " + request.getSurname());
     }
 
