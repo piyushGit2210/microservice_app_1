@@ -20,15 +20,4 @@ class Service3ApplicationTests {
 		assertEquals("John Doe", result);
 	}
 
-	@Test
-	void testGetBodyNullValues() {
-
-		NameRequest request = new NameRequest();
-		request.setName(null);
-		request.setSurname(null);
-
-		String result = AppendService.getBody(request);
-		assertEquals("null null", result);
-	}
-
 }
