@@ -10,6 +10,9 @@ public class NameRequest {
     @NotBlank
     private String surname;
 
+    public NameRequest() {
+    }
+
     public NameRequest(String name, String surname) {
         this.name = name;
         this.surname = surname;

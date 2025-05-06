@@ -1,6 +1,7 @@
 package com.centime.service1.controller;
 
 import com.centime.commonservice.dtos.NameRequest;
+import com.centime.service1.service.ConcatService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +15,14 @@ import org.springframework.beans.factory.annotation.Value;
 @RestController
 @RequestMapping("/service1")
 public class Controller {
-    private final RestTemplate restTemplate;
-    private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
-    @Value("${service2.url}")
-    private String service2Url;
+    private final ConcatService service;
 
-    @Value("${service3.url}")
-    private String service3Url;
-
-    public Controller(RestTemplateBuilder builder) {
-        this.restTemplate = builder.build();
+    public Controller(ConcatService service) {
+        this.service = service;
     }
+
+    private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     @GetMapping("/health")
     public ResponseEntity<String> health() {
@@ -37,13 +34,9 @@ public class Controller {
     public ResponseEntity<String> concat(@RequestBody @Valid NameRequest json) {
         logger.info("TraceID: {}, POST /concat called", MDC.get("traceId"));
 
-        // Call Service 2
-        String hello = restTemplate.getForObject(service2Url + "/hello", String.class);
+        String response = service.concatNameRequest(json);
 
-        // Call Service 3
-        String fullName = restTemplate.postForObject(service3Url + "/print", json, String.class);
-
-        return ResponseEntity.ok(hello + " " + fullName);
+        return ResponseEntity.ok(response);
     }
 }
 
